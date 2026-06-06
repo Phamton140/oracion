@@ -1,0 +1,62 @@
+name: oracion
+description: "Oración — Experiencia de conversación con las Escrituras. Funciona 100% offline."
+publish_to: "none"
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.11.3 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # Estado / DI
+  flutter_riverpod: ^2.5.1
+
+  # Navegación
+  go_router: ^14.2.0
+
+  # Base de datos
+  drift: ^2.33.0
+  drift_flutter: ^0.3.0
+  sqlite3: ^3.3.2
+  sqlite3_flutter_libs: any
+
+  # Logging
+  logger: ^2.4.0
+
+  # Sistema de archivos
+  path_provider: ^2.1.4
+  path: ^1.9.0
+  file_picker: ^8.1.2
+
+  # Compartir versículos
+  share_plus: ^10.1.2
+
+  # Tipografías
+  google_fonts: ^6.2.1
+
+  # Internacionalización
+  intl: ^0.20.0
+
+  # Utilidades
+  collection: ^1.18.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+
+  # Generación de código
+  build_runner: ^2.4.13
+  drift_dev: ^2.33.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/bible/
+    - assets/data/

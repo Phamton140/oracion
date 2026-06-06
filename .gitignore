@@ -1,0 +1,66 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VSCode
+.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+coverage/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+/android/.gradle/
+/android/captures/
+/android/local.properties
+/android/key.properties
+
+# Drift generado
+**/*.g.dart
+!lib/**/*.g.dart
+
+# Freezed generado (cuando se agregue)
+**/*.freezed.dart
+**/*.gr.dart
+
+# Build pipeline: outputs intermedios (regenerables con build_db.py / build_tags.py)
+tools/output/data.sql
+tools/output/tables.sql
+assets/bible/manifest.json
+assets/bible/verse_tags_auto.csv
+assets/bible/verse_tags_final.csv
+# rv1909.json es intermedio pero útil para inspección local; descomentar para ignorar:
+# assets/bible/rv1909.json

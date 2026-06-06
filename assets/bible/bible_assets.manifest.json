@@ -1,0 +1,19 @@
+{
+  "asset": "bible_assets.db",
+  "version": 1,
+  "translation": "RV1909",
+  "verse_count": 31102,
+  "book_count": 66,
+  "verse_tag_count": 55134,
+  "size_bytes": 9789440,
+  "sha256": "f741d4f9d98f54c9042cdef971c7519656d276c02ba8fe0375e9eafda9987508",
+  "generated_at": "2026-06-06T22:03:22.860050+00:00",
+  "source_verses": "iglesianazaret/biblia-reina-valera-1909-base-datos-sql (GitHub, public domain)",
+  "source_tags": "tools/build_tags.py + tools/lexicon_seed.json + tools/verse_tags_manual.csv",
+  "book_aliases": {
+    "Revelación": {
+      "display_name": "Apocalipsis",
+      "subtitle": "Revelación"
+    }
+  }
+}

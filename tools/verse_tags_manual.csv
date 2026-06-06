@@ -1,0 +1,4 @@
+book_number,chapter,verse,tag,category,weight,action
+43,3,16,amor,emocion,1.5,add
+19,23,1,provision,necesidad,1.0,add
+19,23,4,proteccion,necesidad,1.0,add

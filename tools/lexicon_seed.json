@@ -1,0 +1,374 @@
+{
+  "version": 1,
+  "description": "Lexicon semilla para auto-tagging del corpus RV1909. Incluye emociones, necesidades humanas y temas bíblicos. Editable: añadir tags o keywords sin tocar la arquitectura del build pipeline.",
+  "tags": [
+    {
+      "id": "amor",
+      "category": "emocion",
+      "description": "Amor divino y humano, caridad, afecto",
+      "keywords": [
+        "amor", "amar", "amada", "amado", "amáis", "amamos", "aman", "amaré", "amarán", "amarás", "amó", "amaba", "amaban", "amabas", "amamos", "amaste", "amaron", "amemos", "amen", "ama", "amas", "amando", "caridad", "querer", "quiere", "quiero", "quieres", "quisiera", "afecto", "ternura"
+      ]
+    },
+    {
+      "id": "alegria",
+      "category": "emocion",
+      "description": "Gozo, regocijo, felicidad",
+      "keywords": [
+        "alegría", "alegre", "alegre", "gozo", "gozar", "goza", "gozan", "gocemos", "regocijo", "regocijar", "regocijarse", "regocija", "regocijan", "regocijado", "regocijada", "regocijándose", "dichoso", "dichosa", "dichosos", "felicidad", "gozoso", "gozosa", "gozosos", "regocijémonos", "alégrate", "alégrense", "alégrate", "regocijaos", "festejar", "festejando"
+      ]
+    },
+    {
+      "id": "paz",
+      "category": "emocion",
+      "description": "Paz interior, tranquilidad, armonía",
+      "keywords": [
+        "paz", "pacífico", "pacífica", "tranquilidad", "sosiego", "calma", "quiétude", "quieto", "quieta", "quietos", "apacible", "apacibles", "sereno", "serena", "serenos", "descanso", "reposar", "reposo", "reposará", "reposan", "dormid", "duerme", "duermen", "dormía", "dormirán"
+      ]
+    },
+    {
+      "id": "esperanza",
+      "category": "emocion",
+      "description": "Esperanza, expectativa, aguardar",
+      "keywords": [
+        "esperanza", "esperar", "espera", "esperan", "esperanza", "esperanzas", "esperaré", "esperarán", "esperó", "esperaba", "esperaban", "esperando", "aguardar", "aguarda", "aguardan", "aguardando", "promesa", "promesas", "prometido", "prometió", "prometida", "esperanza", "confiar"
+      ]
+    },
+    {
+      "id": "gratitud",
+      "category": "emocion",
+      "description": "Agradecimiento, dar gracias",
+      "keywords": [
+        "gracias", "agradecer", "agradece", "agradezcan", "agradeció", "agradecido", "agradecida", "agradecidos", "doy gracias", "damos gracias", "dar gracias", "damos", "alabanzas", "alabanza", "bendecir", "bendice", "bendecid", "bendije", "bendijeron", "bendito", "bendita", "benditos", "acción de gracias", "acciones de gracias"
+      ]
+    },
+    {
+      "id": "tristeza",
+      "category": "emocion",
+      "description": "Tristeza, dolor, aflicción, llanto",
+      "keywords": [
+        "tristeza", "triste", "tristes", "tristemente", "dolor", "dolores", "dolido", "dolida", "dolidos", "llorar", "llanto", "llora", "lloran", "lloraba", "lloraban", "lloró", "lloré", "llorará", "llorarán", "lágrimas", "gemir", "gime", "gimen", "gemido", "gemidos", "afligir", "afligido", "afligida", "afligidos", "afligida", "aflicción", "aflicciones", "angustia", "angustias", "angustiado", "angustiada", "angustiosos", "pesar", "pesares", "duelo", "duelos", "luto", "lamentar", "lamentación", "lamentaciones", "lamenta", "lamentan", "suspirar", "suspiro", "suspiros"
+      ]
+    },
+    {
+      "id": "miedo",
+      "category": "emocion",
+      "description": "Temor, miedo, pavor",
+      "keywords": [
+        "miedo", "temor", "temores", "temor", "teme", "temen", "temed", "temía", "temían", "temió", "temeré", "temerán", "temo", "tememos", "pavor", "espanto", "asustado", "asustada", "asustados", "asustar", "asusta", "asustan", "asustó", "asustaba", "aterrado", "aterrorizado", "pánico", "espantoso", "espantosa", "espantosos"
+      ]
+    },
+    {
+      "id": "ansiedad",
+      "category": "emocion",
+      "description": "Ansiedad, preocupación, inquietud",
+      "keywords": [
+        "ansiedad", "ansioso", "ansiosa", "ansiosos", "preocupación", "preocupar", "preocupa", "preocupan", "preocupado", "preocupada", "preocupados", "preocupándose", "inquietud", "inquieto", "inquieta", "inquietos", "inquietas", "intranquilo", "intranquila", "intranquilos", "angustia", "angustiado", "angustia", "nervioso", "nerviosa", "nerviosos", "agobiado", "agobiada", "agobiados"
+      ]
+    },
+    {
+      "id": "enojo",
+      "category": "emocion",
+      "description": "Ira, enojo, furia, indignación",
+      "keywords": [
+        "ira", "irado", "irada", "irados", "enojo", "enojado", "enojada", "enojados", "enojarse", "enoja", "enojan", "enojó", "furia", "furioso", "furiosa", "furiosos", "indignación", "indignado", "indignada", "rabia", "rabioso", "rabiosa", "enojarme", "enfurecido", "enfurecida", "enfurecidos", "cólera", "colérico", "colérica", "airado", "airada", "airados", "ira", "iracundo", "iracunda", "iracundos"
+      ]
+    },
+    {
+      "id": "culpa",
+      "category": "emocion",
+      "description": "Culpa, remordimiento",
+      "keywords": [
+        "culpa", "culpable", "culpables", "culpar", "culpa", "culpan", "remordimiento", "remordimientos", "acusar", "acusado", "acusada", "acusados", "condenado", "condenada", "condenados", "condenación", "responsable", "responsables", "reo", "culpabilidad"
+      ]
+    },
+    {
+      "id": "consuelo",
+      "category": "necesidad",
+      "description": "Consuelo,安慰, réconfort",
+      "keywords": [
+        "consuelo", "consolar", "consuela", "consuelan", "consoló", "consolado", "consolada", "consolados", "consolador", "consoladora", "consolación", "consolaciones", "alivio", "aliviar", "alivia", "alivian", "aliviado", "aliviada", "aliviados", "socorro", "socorrer", "socorre", "socorren", "socorrido", "socorrida", "reconfortar", "reconforta", "reconfortan", "reconfortado", "reconfortada"
+      ]
+    },
+    {
+      "id": "guia",
+      "category": "necesidad",
+      "description": "Guía, dirección, camino",
+      "keywords": [
+        "guía", "guiar", "guía", "guían", "guio", "guió", "guiado", "guiada", "guiados", "dirección", "camino", "caminos", "caminar", "camina", "caminan", "caminó", "caminado", "sendero", "senderos", "sendero", "rumbo", "orientar", "orientación", "conducir", "conduce", "conducen", "condujo", "conducido", "conducida", "llevar", "lleva", "llevan", "llevó", "llevado", "llevada", "llevados", "acompañar", "acompaña", "acompañan", "acompañó", "acompañado", "acompañada"
+      ]
+    },
+    {
+      "id": "perdon",
+      "category": "necesidad",
+      "description": "Perdón, misericordia, absolución",
+      "keywords": [
+        "perdón", "perdonar", "perdona", "perdonan", "perdonó", "perdonará", "perdonarán", "perdonado", "perdonada", "perdonados", "misericordia", "misericordioso", "misericordiosa", "misericordiosos", "misericordias", "compasión", "compasivo", "compasiva", "compasivos", "indulto", "indultar", "indulta", "indultan", "indultó", "clemencia", "clemente", "gracia", "gracioso", "graciosa"
+      ]
+    },
+    {
+      "id": "proteccion",
+      "category": "necesidad",
+      "description": "Protección, refugio, amparo",
+      "keywords": [
+        "protección", "proteger", "protege", "protegen", "protegió", "protegerá", "protegerán", "protegido", "protegida", "protegidos", "refugio", "refugiarse", "refugia", "refugian", "refugio", "amparo", "amparar", "ampara", "amparam", "ampara", "ampara", "amparo", "resguardo", "resguardar", "resguarda", "resguardan", "resguardó", "escudo", "defender", "defiende", "defienden", "defendió", "defenderá", "defenderán", "defendido", "defendida", "guardar", "guarda", "guardan", "guardó", "guardado", "guardada", "guardados", "guárdame", "guárdanos", "guárdalos", "guárdala", "custodiar", "custodia", "custodian", "custodió", "custodiado", "custodiada"
+      ]
+    },
+    {
+      "id": "sabiduria",
+      "category": "necesidad",
+      "description": "Sabiduría, entendimiento, prudencia",
+      "keywords": [
+        "sabiduría", "sabio", "sabia", "sabios", "sabias", "sabiamente", "sabiduría", "entendimiento", "entender", "entiende", "entienden", "entendió", "entenderá", "entenderán", "entendido", "entendida", "entendidos", "prudente", "prudentes", "prudencia", "inteligencia", "inteligente", "inteligentes", "conoc", "conocimiento", "conocer", "conoce", "conocen", "conoció", "conocerá", "conocedor", "conocedora", "sabiduría", "sabiamente", "discreto", "discreta", "discretos"
+      ]
+    },
+    {
+      "id": "fuerza",
+      "category": "necesidad",
+      "description": "Fuerza, poder, fortaleza, vigor",
+      "keywords": [
+        "fuerza", "fuerzas", "fuerte", "fuertes", "fuertemente", "fortalecer", "fortalece", "fortalecen", "fortaleció", "fortalecido", "fortalecida", "fortalecidos", "fortalecimiento", "fortaleza", "fortalezas", "poder", "poderes", "poderoso", "poderosa", "poderosos", "poderosamente", "vigor", "robusto", "robusta", "vigoroso", "vigorosa", "valiente", "valientes", "valentía", "valía", "potente", "potentes"
+      ]
+    },
+    {
+      "id": "sanidad",
+      "category": "necesidad",
+      "description": "Sanidad, curación, salud, restauración",
+      "keywords": [
+        "sanidad", "sanar", "sana", "sanan", "sanó", "sanará", "sanarán", "sanado", "sanada", "sanados", "curación", "curar", "cura", "curan", "curó", "curará", "curarán", "curado", "curada", "curados", "salud", "saludable", "saludables", "sano", "sana", "sanos", "sanas", "enfermedad", "enfermedades", "enfermo", "enferma", "enfermos", "enfermas", "dolencia", "dolencias", "herida", "heridas", "herido", "heridos", "restaurar", "restaura", "restauran", "restauró", "restauración", "restaurado", "restaurada", "medicina", "médico", "médica", "médicos"
+      ]
+    },
+    {
+      "id": "paciencia",
+      "category": "necesidad",
+      "description": "Paciencia, longanimidad, espera",
+      "keywords": [
+        "paciencia", "paciente", "pacientes", "pacientemente", "longanimidad", "longánime", "longánimes", "tolerar", "tolera", "toleran", "toleró", "tolerado", "tolerada", "sufrir", "sufre", "sufren", "sufrió", "sufrirá", "sufrirán", "sufrido", "sufrida", "sufridos", "sufrimiento", "sufrimientos", "aguantar", "aguanta", "aguantan", "aguantó", "resistir", "resiste", "resisten", "resistió", "perseverar", "persevera", "perseveran", "perseveró", "perseverancia", "constancia", "constante", "constantes"
+      ]
+    },
+    {
+      "id": "provision",
+      "category": "necesidad",
+      "description": "Provisión, sustento, abundancia",
+      "keywords": [
+        "provisión", "proveer", "provee", "proveen", "proveyó", "proveerá", "proveerán", "provisto", "provista", "provistos", "sustento", "sustentar", "sustenta", "sustentan", "sustentó", "sustentado", "sustentada", "abundancia", "abundante", "abundantes", "abundantemente", "riqueza", "riquezas", "rico", "rica", "ricos", "ricas", "bendición", "bendiciones", "bendecido", "bendecida", "bendecidos", "maná", "alimento", "alimentos", "alimento", "pan", "comer", "comida", "comidas", "hambre", "hambriento", "hambrientos", "sed", "sediento", "sedientos"
+      ]
+    },
+    {
+      "id": "descanso",
+      "category": "necesidad",
+      "description": "Descanso, reposo, renovación",
+      "keywords": [
+        "descanso", "descansar", "descansa", "descansan", "descansó", "descansado", "descansada", "descansados", "reposo", "reposar", "reposa", "reposan", "reposó", "renovación", "renovar", "renueva", "renuevan", "renovó", "renovado", "renovada", "renovados", "alivio", "sosiego", "calma", "quietud", "sábado", "sabático", "sabática", "descanse", "descansará", "descansarán"
+      ]
+    },
+    {
+      "id": "liberacion",
+      "category": "necesidad",
+      "description": "Liberación, rescate, redención, victoria",
+      "keywords": [
+        "liberación", "liberar", "libera", "liberan", "liberó", "liberará", "liberarán", "liberado", "liberada", "liberados", "libertad", "libre", "libres", "rescate", "rescatar", "rescata", "rescatan", "rescató", "rescatará", "rescatarán", "rescatado", "rescatada", "rescatados", "redención", "redimir", "redime", "redimen", "redimió", "redimirá", "redimido", "redimida", "redimidos", "redentor", "redentora", "salvación", "salvar", "salva", "salvan", "salvó", "salvará", "salvarán", "salvado", "salvada", "salvados", "salvo", "salvos", "victoria", "victorias", "victorioso", "victoriosa", "vencer", "vence", "vencen", "venció", "vencerá", "vencerán", "vencido", "vencida", "vencidos", "triunfo", "triunfar", "triunfa", "triunfan", "triunfó"
+      ]
+    },
+    {
+      "id": "socorro",
+      "category": "necesidad",
+      "description": "Socorro, ayuda, auxilio",
+      "keywords": [
+        "socorro", "socorrer", "socorre", "socorren", "socorrido", "socorrida", "socorridos", "ayuda", "ayudar", "ayuda", "ayudan", "ayudó", "ayudará", "ayudarán", "ayudado", "ayudada", "ayudados", "auxilio", "auxiliar", "auxilia", "auxilian", "auxilió", "asistir", "asiste", "asisten", "asistió", "asistencia", "asistido", "asistida", "asistidos", "apoyo", "apoyar", "apoya", "apoyan", "apoyó", "apoyado", "apoyada", "apoyados"
+      ]
+    },
+    {
+      "id": "identidad",
+      "category": "necesidad",
+      "description": "Identidad, dignidad, valor propio, ser hijo de Dios",
+      "keywords": [
+        "identidad", "identificar", "dignidad", "digno", "digna", "dignos", "dignas", "valor", "valía", "valioso", "valiosa", "valiosos", "preciado", "preciada", "preciados", "hijo", "hija", "hijos", "hijas", "hijo de Dios", "hija de Dios", "hijos de Dios", "pueblo", "pueblo de Dios", "siervo", "sierva", "siervos", "siervas", "siervo de Dios", "sierva de Dios", "elegido", "elegida", "elegidos", "escogido", "escogida", "escogidos", "santo", "santa", "santos", "santas", "santidad", "pertenencia", "pertenecer", "ciudadano", "ciudadanos", "heredero", "heredera", "herederos", "herederas"
+      ]
+    },
+    {
+      "id": "aliento",
+      "category": "necesidad",
+      "description": "Ánimo, aliento, estímulo, motivación",
+      "keywords": [
+        "ánimo", "anímate", "animaos", "aliento", "alentar", "alienta", "alientan", "alentó", "alentado", "alentada", "estimular", "estimula", "estimulan", "estimuló", "estimulado", "estimulada", "motivar", "motiva", "motivan", "motivó", "motivado", "motivada", "esfuerzo", "esforzarse", "esfuérzate", "esforzaos", "esforzó", "esforzado", "esforzada", "esforzados", "valiente", "valientes", "valentía", "esforzar"
+      ]
+    },
+    {
+      "id": "coraje",
+      "category": "necesidad",
+      "description": "Coraje, valentía, denuedo",
+      "keywords": [
+        "coraje", "valentía", "valiente", "valientes", "denuedo", "arrojo", "atrever", "atreve", "atreven", "atrevió", "atrevido", "atrevida", "atrevidos", "intrépido", "intrépida", "intrépidos", "audaz", "audaces", "audacia", "esforzar", "esfuérzate", "esforzaos", "animo", "ánimo", "fortalecer", "fortalece", "fortalecido"
+      ]
+    },
+    {
+      "id": "oracion",
+      "category": "tema",
+      "description": "Oración, súplica, hablar con Dios",
+      "keywords": [
+        "oración", "oraciones", "orar", "ora", "oran", "oró", "oraba", "oraban", "oramos", "orarán", "orando", "súplica", "súplicas", "suplicar", "suplica", "suplican", "suplicó", "suplicaba", "suplicando", "ruego", "ruegos", "rogar", "ruega", "ruegan", "rogó", "rogaba", "rogaban", "implorar", "implora", "imploran", "imploró", "clamar", "clama", "claman", "clamó", "clamaba", "clamaban", "clamor", "clamores", "invoque", "invocar", "invoca", "invocan", "invocó", "invocaba", "invocación", "invocaciones", "intercesión", "interceder", "intercede", "interceden", "intercedió", "petición", "peticiones", "pedir", "pide", "piden", "pidió", "pedido", "pedida", "pedidos", "pedimos", "demandar", "demanda", "demandan", "demandó"
+      ]
+    },
+    {
+      "id": "fe",
+      "category": "tema",
+      "description": "Fe, creer, confianza en Dios",
+      "keywords": [
+        "fe", "fé", "creer", "cree", "creen", "creyó", "creía", "creían", "creeré", "creerán", "creído", "creída", "creídos", "creyendo", "creyentes", "creyente", "confiar", "confía", "confían", "confió", "confiaba", "confiaban", "confianza", "confiado", "confiada", "confiados", "fiel", "fieles", "fidelidad", "fielmente", "creencia", "creencias", "doctrina", "doctrinas", "evangelio", "evangelios"
+      ]
+    },
+    {
+      "id": "familia",
+      "category": "tema",
+      "description": "Familia, padres, hermanos, hogar",
+      "keywords": [
+        "familia", "familias", "familiar", "familiares", "padre", "padres", "padre tuyo", "padres tuyos", "madre", "madres", "hijo", "hija", "hijos", "hijas", "hermano", "hermana", "hermanos", "hermanas", "hermano tuyo", "hermana tuya", "hermanos tuyos", "hermanas tuyas", "abuelo", "abuela", "abuelos", "abuelas", "nieto", "nieta", "nietos", "nietas", "tío", "tía", "tíos", "tías", "primo", "prima", "primos", "primas", "esposo", "esposa", "esposos", "esposas", "marido", "mujer", "maridos", "mujeres", "casa", "hogar", "hogares", "linaje", "generación", "generaciones", "descendiente", "descendientes", "descendencia"
+      ]
+    },
+    {
+      "id": "matrimonio",
+      "category": "tema",
+      "description": "Matrimonio, esposos, casados, unión",
+      "keywords": [
+        "matrimonio", "casarse", "casamiento", "boda", "bodas", "casó", "casada", "casado", "casados", "casadas", "casamiento", "esposo", "esposa", "esposos", "esposas", "novia", "novio", "novios", "noviazgo", "unión", "unir", "une", "unen", "unió", "unido", "unida", "unidos", "unidas", "comprometido", "comprometida", "comprometidos", "comprometidas", "desposar", "desposó", "desposada", "desposado", "desposados"
+      ]
+    },
+    {
+      "id": "hijos",
+      "category": "tema",
+      "description": "Crianza, educación de hijos",
+      "keywords": [
+        "hijo", "hija", "hijos", "hijas", "criar", "cria", "crian", "crió", "criado", "criada", "criados", "criadas", "criatura", "criaturas", "niño", "niña", "niños", "niñas", "infante", "infantes", "infancia", "pequeño", "pequeña", "pequeños", "pequeñas", "muchacho", "muchacha", "muchachos", "muchachas", "joven", "jóvenes", "juventud", "adolescente", "adolescentes", "educar", "educa", "educan", "educó", "educado", "educada", "educados", "educación", "instruir", "instruye", "instruyen", "instruyó", "instruido", "instruida", "instrucción", "instrucciones", "enseñar", "enseña", "enseñan", "enseñó", "enseñado", "enseñada", "enseñados", "enseñanza", "enseñanzas", "disciplinar", "disciplina", "disciplinas", "disciplinado", "disciplinada", "corregir", "corrige", "corrigen", "corrigió", "corregido", "corregida", "corrección", "amonestar", "amonesta", "amonestan", "amonestó", "castigar", "castiga", "castigan", "castigó", "castigado", "castigada", "castigados", "castigo", "castigos"
+      ]
+    },
+    {
+      "id": "enemigos",
+      "category": "tema",
+      "description": "Enemigos, adversarios, conflictos",
+      "keywords": [
+        "enemigo", "enemiga", "enemigos", "enemigas", "enemistad", "adversario", "adversaria", "adversarios", "adversarias", "adversidad", "contrario", "contraria", "contrarios", "contrarias", "rival", "rivales", "rivalidad", "perseguir", "persigue", "persiguen", "persiguió", "perseguido", "perseguida", "perseguidos", "persecución", "persecuciones", "odiar", "odia", "odian", "odió", "odiaba", "odiaban", "odio", "odios", "combatir", "combate", "combaten", "combatió", "lucha", "luchar", "lucha", "luchan", "luchó", "pelea", "pelear", "pelea", "pelean", "peleó", "peleado", "batalla", "batallar", "batalla", "batallan", "batalló", "guerra", "guerras", "guerrero", "guerreros", "conflict", "contienda", "contiendas"
+      ]
+    },
+    {
+      "id": "sufrimiento",
+      "category": "tema",
+      "description": "Sufrimiento, dolor, persecución, prueba",
+      "keywords": [
+        "sufrimiento", "sufrimientos", "sufrir", "sufre", "sufren", "sufrió", "sufrirá", "sufrirán", "sufrido", "sufrida", "sufridos", "dolor", "dolores", "dolido", "dolida", "dolidos", "aflicción", "aflicciones", "afligir", "aflige", "afligen", "afligió", "afligido", "afligida", "afligidos", "angustia", "angustias", "angustiado", "angustiada", "angustiosos", "prueba", "pruebas", "probar", "prueba", "prueban", "probó", "probado", "probada", "probados", "tentación", "tentaciones", "tentar", "tienta", " tientan", "tentó", "tentado", "tentada", "tentados", "persecución", "persecuciones", "perseguir", "persigue", "persiguen", "persiguió", "perseguido", "perseguida", "perseguidos", "tribulación", "tribulaciones", "calamidad", "calamidades", "desgracia", "desgracias", "miserable", "miserables", "miseria", "penalidad", "penalidades", "tormento", "tormentos", "atormentar", "atormenta", "atormentan", "atormentó", "atormentado", "atormentada", "cruz", "cruces", "crucificar", "crucifica", "crucifican", "crucificó", "crucificado", "crucificada", "crucificados", "calvario", "pena", "penas", "penado", "penada"
+      ]
+    },
+    {
+      "id": "muerte",
+      "category": "tema",
+      "description": "Muerte, morir, difunto, vida eterna",
+      "keywords": [
+        "muerte", "muertes", "morir", "muere", "mueren", "murió", "morirá", "morirán", "muerto", "muerta", "muertos", "muertas", "fallecer", "fallece", "fallecen", "falleció", "fallecido", "fallecida", "difunto", "difunta", "difuntos", "difuntas", "sepulcro", "sepulcros", "tumba", "tumbas", "entierro", "enterrar", "entierra", "entierran", "enterró", "enterrado", "enterrada", "enterrados", "cementerio", "vida eterna", "eterna", "eterno", "eternos", "eternas", "inmortalidad", "inmortal", "resurrección", "resucitar", "resucita", "resucitan", "resucitó", "resucitado", "resucitada", "resucitados", "vivificar", "vivifica", "vivifican", "vivificó"
+      ]
+    },
+    {
+      "id": "dinero",
+      "category": "tema",
+      "description": "Dinero, riqueza, pobreza, posesión",
+      "keywords": [
+        "dinero", "diner", "moneda", "monedas", "plata", "oro", "riqueza", "riquezas", "rico", "rica", "ricos", "ricas", "pobre", "pobres", "pobreza", "pobrezas", "limosna", "limosnas", "dádiva", "dádivas", "donación", "donaciones", "don", "dones", "ofrenda", "ofrendas", "diezmo", "diezmos", "tesoro", "tesoros", "posesión", "posesiones", "propiedad", "propiedades", "heredad", "heredades", "hacienda", "haciendas", "ganancia", "ganancias", "lucro", "lucrar", "comerciar", "comercio", "comerciante", "comerciantes", "préstamo", "prestar", "presta", "prestan", "prestó", "prestado", "deuda", "deudas", "deudor", "deudora", "deudores", "acreedor", "acreedores", "usura", "usurero", "usureros", "avaro", "avara", "avaros", "avaricia", "codicia", "codicioso", "codiciosa", "codiciosos", "mamón", "mamona"
+      ]
+    },
+    {
+      "id": "trabajo",
+      "category": "tema",
+      "description": "Trabajo, ocupación,劳动, labor, vocación",
+      "keywords": [
+        "trabajo", "trabajos", "trabajador", "trabajadora", "trabajadores", "trabajadoras", "trabajar", "trabaja", "trabajan", "trabajó", "labor", "labores", "laborar", "labora", "laboran", "laboró", "oficio", "oficios", "empleo", "emplear", "emplea", "emplean", "empleó", "ocupación", "ocupaciones", "ocupar", "ocupa", "ocupan", "ocupó", "ocupado", "ocupada", "vocación", "vocaciones", "sirviente", "sirvientes", "siervo", "sierva", "siervos", "siervas", "criado", "criada", "criados", "criadas", "cosecha", "cosechar", "siega", "segar", "siega", "siegan", "segó", "semilla", "semillas", "sembrar", "siembra", "siembran", "sembró", "sembrado", "viña", "viñedo", "viñedos", "viñador", "viñadores", "agricultor", "agricultores", "pastor", "pastores", "pastorear", "pastorea", "pastorean", "pastoreó", "rebaaño", "rebaños", "oveja", "ovejas"
+      ]
+    },
+    {
+      "id": "pecado",
+      "category": "tema",
+      "description": "Pecado, transgresión, iniquidad, maldad",
+      "keywords": [
+        "pecado", "pecados", "pecar", "peca", "pecan", "pecó", "pecaré", "pecarán", "pecado", "transgresión", "transgresiones", "transgredir", "transgrede", "transgreden", "transgredió", "iniquidad", "iniquidades", "inicuo", "inicua", "inicu", "maldad", "maldades", "malvado", "malvada", "malvados", "malvadas", "malo", "mala", "malos", "malas", "mal", "mal", "faltar", "falta", "faltan", "faltó", "faltado", "culpa", "culpabilidad", "impuro", "impura", "impuros", "impuras", "impureza", "impurezas", "impío", "impía", "impíos", "impías", "impiedad", "abominación", "abominaciones", "abominar", "abomina", "abominan", "abominó", "perverso", "perversa", "perversos", "perversas", "perversidad", "corromper", "corrompido", "corrompida", "corrupción", "depravación", "engañar", "engaña", "engañan", "engañó", "engañado", "engañada", "engañador", "engañadores", "engaño", "engaños", "fals", "falso", "falsa", "falsos", "falsas", "falsedad", "falsificaciones", "mentir", "miente", "mienten", "mintió", "mentido", "mentira", "mentiras", "mentiroso", "mentirosa", "mentirosos", "mentirosas"
+      ]
+    },
+    {
+      "id": "salvacion",
+      "category": "tema",
+      "description": "Salvación, gracia, vida eterna, evangelio",
+      "keywords": [
+        "salvación", "salvación", "salvar", "salva", "salvan", "salvó", "salvará", "salvarán", "salvado", "salvada", "salvados", "salvadas", "salvo", "salvos", "salvas", "salvación", "gracia", "gracias", "gracioso", "graciosa", "graciosos", "graciosas", "evangelio", "evangelizar", "evangeliza", "evangelizan", "evangelizó", "evangelización", "vida eterna", "vida perdurable", "nacer de nuevo", "renacer", "nuevo nacimiento", "conversión", "convertir", "convierte", "convierten", "convirtió", "convertido", "convertida", "convertidos", "arrepentir", "arrepiente", "arrepienten", "arrepintió", "arrepentido", "arrepentida", "arrepentidos", "arrepentimiento", "bautizar", "bautismo", "bautiza", "bautizan", "bautizó", "bautizado", "bautizada", "bautizados", "nuevo", "nueva", "nuevos", "nuevas", "regeneración", "regenerar"
+      ]
+    },
+    {
+      "id": "promesa",
+      "category": "tema",
+      "description": "Promesas de Dios, pacto, juramento",
+      "keywords": [
+        "promesa", "promesas", "prometer", "promete", "prometen", "prometió", "prometerá", "prometerán", "prometido", "prometida", "prometidos", "prometidas", "pacto", "pactos", "alianza", "alianzas", "juramento", "juramentos", "jurar", "jura", "juran", "juró", "jurada", "jurado", "jurados", "testamento", "testamentos", "voto", "votos", "votar", "vota", "votan", "votó", "votado", "antiguo testamento", "nuevo testamento", "testamento viejo", "testamento nuevo"
+      ]
+    },
+    {
+      "id": "obediencia",
+      "category": "tema",
+      "description": "Obedecer, cumplir, sumisión a Dios",
+      "keywords": [
+        "obediencia", "obediente", "obedientes", "obedientemente", "obedecer", "obedece", "obedecen", "obedeció", "obedecerá", "obedecerán", "obedecido", "obedecida", "obedecidos", "cumplir", "cumple", "cumplen", "cumplió", "cumplirá", "cumplirán", "cumplido", "cumplida", "cumplidos", "cumplimiento", "guardar", "guarda", "guardan", "guardó", "guardado", "guardada", "guardados", "mandamiento", "mandamientos", "mandar", "manda", "mandan", "mandó", "mandado", "orden", "órdenes", "ordenar", "ordena", "ordenan", "ordenó", "ordenado", "ordenada", "ley", "leyes", "deber", "sumisión", "sumiso", "sumisa", "sumisos", "sumisas", "someterse", "somete", "someten", "sometió", "sometido", "sometida", "sometidos", "sometidas", "sujeción", "sujeto", "sujeta", "sujetos", "sujetas", "rendir", "rinde", "rinden", "rindió", "rendido", "rendida", "humillarse", "humilla", "humillan", "humilló", "humillado", "humillada", "humillados", "humillación"
+      ]
+    },
+    {
+      "id": "alabanza",
+      "category": "tema",
+      "description": "Alabar, adorar, exaltar, glorificar",
+      "keywords": [
+        "alabanza", "alabanzas", "alabar", "alaba", "alaban", "alabó", "alabará", "alabarán", "alabado", "alabada", "alabados", "alabadas", "alabándole", "alabándo", "adoración", "adorar", "adora", "adoran", "adoró", "adorará", "adorarán", "adorado", "adorada", "adorador", "adoradores", "exaltar", "exalta", "exaltan", "exaltó", "exaltará", "exaltarán", "exaltado", "exaltada", "exaltados", "exaltadas", "glorificar", "glorifica", "glorifican", "glorificó", "glorificará", "glorificarán", "glorificado", "glorificada", "glorificados", "glorificadas", "gloria", "glorias", "glorioso", "gloriosa", "gloriosos", "gloriosas", "magnificar", "magnifica", "magnifican", "magnificó", "magnificado", "magnificada", "magnificado", "enaltecer", "enaltece", "enaltecen", "enalteció", "enaltecido", "bendecir", "bendice", "bendicen", "bendijo", "bendijeron", "bendecirá", "bendecirán", "bendecido", "bendecida", "bendecidos", "benditas", "loar", "loa", "loan", "loó", "loado", "loada", "loados", "loadas", "himno", "himnos", "cantar", "canta", "cantan", "cantó", "cantará", "cantarán", "cantado", "cantada", "cantados", "cantadas", "cántico", "cánticos", "salmo", "salmos", "salmodia", "salmodiar"
+      ]
+    },
+    {
+      "id": "tentacion",
+      "category": "tema",
+      "description": "Tentación, prueba, seducción",
+      "keywords": [
+        "tentación", "tentaciones", "tentar", "tienta", " tientan", "tentó", "tentará", "tentarán", "tentado", "tentada", "tentados", "tentadas", "seducción", "seducir", "seduc", "sedujo", "seducido", "seducida", "seducidos", "seducidas", "seductor", "seductores", "engañar", "engaña", "engañan", "engañó", "engañado", "engañada", "engañador", "engañadores", "engaño", "engaños", "engañoso", "engañosa", "caer", "cae", "caen", "cayó", "caerán", "caído", "caída", "caídos", "caídas", "prueba", "pruebas", "probar", "prueba", "prueban", "probó", "probado", "probada", "probados", "someter", "somete", "someten", "sometió", "sometido", "sometida", "sometidos"
+      ]
+    },
+    {
+      "id": "humildad",
+      "category": "tema",
+      "description": "Humildad, mansedumbre, sumisión, modestia",
+      "keywords": [
+        "humildad", "humilde", "humildes", "humildemente", "humillar", "humilla", "humillan", "humilló", "humillará", "humillarán", "humillado", "humillada", "humillados", "humilladas", "humillación", "humillaciones", "mansedumbre", "manso", "mansa", "mansos", "mansas", "mansamente", "apacible", "apacibles", "apacibilidad", "sencillo", "sencilla", "sencillos", "sencillas", "sencillez", "modestia", "modesto", "modesta", "modestos", "modestas", "sumiso", "sumisa", "sumisos", "sumisas", "sumisión", "baj", "bajar", "baja", "bajan", "bajó", "bajado", "rebaj", "rebajar", "rebaja", "rebajan", "rebajó", "rebajado", "rebajada", "abatir", "abate", "abaten", "abatió", "abatido", "abatida", "abatidos"
+      ]
+    },
+    {
+      "id": "esperanza_eterna",
+      "category": "tema",
+      "description": "Cielo, vida eterna, resurrección, gloria futura",
+      "keywords": [
+        "cielo", "cielos", "celestial", "celestiales", "celeste", "celestes", "eternidad", "eterna", "eterno", "eternos", "eternas", "eternamente", "vida eterna", "vida perdurable", "reino", "reinos", "reino de los cielos", "reino de Dios", "reino celestial", "gloria", "glorias", "glorioso", "gloriosa", "gloriosos", "gloriosas", "trono", "tronos", "corona", "coronas", "premio", "premios", "recompensa", "recompensas", "recompensar", "recompensa", "recompensan", "recompensó", "recompensado", "recompensada", "recompensados", "resurrección", "resucitar", "resucita", "resucitan", "resucitó", "resucitará", "resucitarán", "resucitado", "resucitada", "resucitados", "resucitadas", "parusía", "segunda venida", "venida", "volver", "vuelve", "vuelven", "volvió", "vuelto", "venida del Señor", "día del Señor", "juicio final", "juicio", "juicios", "juzgar", "juzga", "juzgan", "juzgó", "juzgará", "juzgarán", "juzgado", "juzgada", "juzgados", "juzgadas", "nueva Jerusalén", "nueva creación", "nuevos cielos", "nueva tierra"
+      ]
+    },
+    {
+      "id": "discípulo",
+      "category": "tema",
+      "description": "Seguir a Jesús, discípulos, aprendizaje",
+      "keywords": [
+        "discípulo", "discípulos", "discípula", "discípulas", "discipulado", "seguir", "sigue", "siguen", "siguió", "seguirá", "seguirán", "seguido", "seguidores", "seguidor", "seguidores", "aprendiz", "aprendices", "aprender", "aprende", "aprenden", "aprendió", "aprendido", "aprendida", "aprendidos", "enseñanza", "enseñanzas", "maestro", "maestros", "alumno", "alumnos", "caminar con", "caminar delante", "caminar tras", "camino", "caminos", "senda", "sendas", "sendero", "senderos", "verbo", "palabra", "palabras", "predicar", "predica", "predican", "predicó", "predicado", "predicador", "predicadores", "predicación", "proclamar", "proclama", "proclaman", "proclamó", "proclamado", "anunciar", "anuncia", "anuncian", "anunció", "anunciado", "anuncio", "anuncios", "testificar", "testifica", "testifican", "testificó", "testificado", "testimonio", "testimonios", "testigo", "testigos", "testiga", "testigas"
+      ]
+    },
+    {
+      "id": "ministerio",
+      "category": "tema",
+      "description": "Servir, ministerio, servicio, misión",
+      "keywords": [
+        "ministerio", "ministerios", "ministrar", "ministra", "ministran", "ministró", "ministrado", "servicio", "servicios", "servir", "sirve", "sirven", "sirvió", "servirá", "servirán", "servido", "servida", "servidos", "servidas", "siervo", "sierva", "siervos", "siervas", "diácono", "diaconisa", "diáconos", "diaconisas", "obispo", "obispos", "pastor", "pastores", "pastorear", "pastorea", "pastorean", "pastoreó", "pastoreado", "anciano", "ancianos", "anciana", "ancianas", "apóstol", "apóstoles", "apostolado", "evangelista", "evangelistas", "profeta", "profetas", "profecía", "profecías", "profetizar", "profetiza", "profetizan", "profetizó", "profetizado", "maestro", "maestros", "misión", "misiones", "misionero", "misionera", "misioneros", "misioneras", "obrar", "obra", "obras", "obrador", "obradores", "obra", "obrada", "obrados", "obra", "obra", "obrando", "labor", "labores", "trabajo", "trabajos"
+      ]
+    },
+    {
+      "id": "gratitud_detalle",
+      "category": "tema",
+      "description": "Acción de gracias, eucaristía, reconocimiento",
+      "keywords": [
+        "acción de gracias", "acciones de gracias", "eucaristía", "gratitud", "reconocer", "reconoce", "reconocen", "reconoció", "reconocido", "reconocida", "reconocidos", "reconocimiento", "reconociendo", "celebrar", "celebra", "celebran", "celebró", "celebrado", "celebrada", "celebrados", "celebración", "celebraciones", "festejar", "fiesta", "fiestas", "festivo", "festiva", "festivos", "festivas", "regocijo", "regocijar", "regocijarse", "regocija", "regocijan", "regocijó", "regocijado", "regocijada", "regocijados", "regocijadas", "regocijémonos", "regocijaos", "alégrate", "alégrense", "alégrense", "alegrarse", "alegrar", "alegra", "alegran", "alegró", "gozo", "gozar", "goza", "gozan", "gozó", "gozado", "gozoso", "gozosa", "gozosos", "gozosas", "gozosamente", "dichoso", "dichosa", "dichosos", "dichosas", "feliz", "felices", "felicidad", "gozarse", "gozándome", "gozándote", "gozándose"
+      ]
+    }
+  ]
+}
