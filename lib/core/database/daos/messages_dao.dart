@@ -46,6 +46,26 @@ class MessagesDao extends DatabaseAccessor<AppDatabase>
         .watch();
   }
 
+  /// Stream de mensajes con join al versículo (puede ser null).
+  /// Usado por la pantalla de chat para mostrar la referencia bíblica.
+  Stream<List<MessageWithVerse>> watchByConversationWithVerse(
+      int conversationId) {
+    final j = select(messages).join(<Join<HasResultSet, dynamic>>[
+      leftOuterJoin(verses, verses.id.equalsExp(messages.verseId)),
+    ])
+      ..where(messages.conversationId.equals(conversationId))
+      ..orderBy([OrderingTerm.asc(messages.createdAt)]);
+
+    return j.watch().map((List<TypedResult> rows) {
+      return rows
+          .map((TypedResult row) => MessageWithVerse(
+                message: row.readTable(messages),
+                verse: row.readTableOrNull(verses),
+              ))
+          .toList();
+    });
+  }
+
   /// Lista puntual de mensajes con join al versículo (puede ser null).
   Future<List<MessageWithVerse>> listByConversation(int conversationId) async {
     final j = select(messages).join(<Join<HasResultSet, dynamic>>[

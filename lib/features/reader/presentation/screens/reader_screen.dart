@@ -62,7 +62,7 @@ class _BookListView extends ConsumerWidget {
         final List<BookDisplay> books = snap.data ?? <BookDisplay>[];
         return ListView.separated(
           itemCount: books.length,
-          separatorBuilder: (_, __) => const Divider(height: 1),
+          separatorBuilder: (_, _) => const Divider(height: 1),
           itemBuilder: (BuildContext context, int i) {
             final BookDisplay b = books[i];
             return ListTile(
@@ -132,7 +132,7 @@ class _ChapterView extends ConsumerWidget {
               child: ListView.separated(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 itemCount: verses.length,
-                separatorBuilder: (_, __) => const SizedBox(height: 8),
+                separatorBuilder: (_, _) => const SizedBox(height: 8),
                 itemBuilder: (BuildContext context, int i) {
                   final Verse v = verses[i];
                   return Card(

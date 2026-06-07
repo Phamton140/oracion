@@ -22,15 +22,21 @@ Future<void> main() async {
   final ProviderContainer container = ProviderContainer();
 
   final logger = container.read(loggerProvider);
-  logger.i('Oración iniciando — Sprint 2');
+  logger.i('Oración iniciando — Sprint 3');
 
-  // Pre-cargar el corpus bíblico en background. La app muestra un
-  // splash hasta que termine.
+  // Pre-cargar el corpus bíblico y el lexicon en background. La app
+  // muestra un splash hasta que termine.
   try {
     await container.read(assetLoaderProvider.future);
     logger.i('Corpus bíblico listo.');
   } catch (e, st) {
     logger.e('Error cargando el corpus bíblico', e, st);
+  }
+  try {
+    await container.read(lexiconProvider.future);
+    logger.i('Lexicon listo.');
+  } catch (e, st) {
+    logger.e('Error cargando el lexicon', e, st);
   }
 
   runApp(

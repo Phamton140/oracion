@@ -32,38 +32,38 @@ class UsageStatsDao extends DatabaseAccessor<AppDatabase>
     ));
   }
 
-  Future<void> incrementConversations() async {
+  Future<void> incrementConversations({int by = 1}) async {
     final s = await _getOrCreate();
     await (update(usageStats)..where(($UsageStatsTable u) => u.id.equals(s.id)))
         .write(UsageStatsCompanion(
-      conversationsCreated: Value<int>(s.conversationsCreated + 1),
+      conversationsCreated: Value<int>(s.conversationsCreated + by),
       updatedAt: Value<DateTime>(DateTime.now()),
     ));
   }
 
-  Future<void> incrementSearches() async {
+  Future<void> incrementSearches({int by = 1}) async {
     final s = await _getOrCreate();
     await (update(usageStats)..where(($UsageStatsTable u) => u.id.equals(s.id)))
         .write(UsageStatsCompanion(
-      searchesPerformed: Value<int>(s.searchesPerformed + 1),
+      searchesPerformed: Value<int>(s.searchesPerformed + by),
       updatedAt: Value<DateTime>(DateTime.now()),
     ));
   }
 
-  Future<void> incrementFavorites() async {
+  Future<void> incrementFavorites({int by = 1}) async {
     final s = await _getOrCreate();
     await (update(usageStats)..where(($UsageStatsTable u) => u.id.equals(s.id)))
         .write(UsageStatsCompanion(
-      favoritesSaved: Value<int>(s.favoritesSaved + 1),
+      favoritesSaved: Value<int>(s.favoritesSaved + by),
       updatedAt: Value<DateTime>(DateTime.now()),
     ));
   }
 
-  Future<void> incrementShared() async {
+  Future<void> incrementShared({int by = 1}) async {
     final s = await _getOrCreate();
     await (update(usageStats)..where(($UsageStatsTable u) => u.id.equals(s.id)))
         .write(UsageStatsCompanion(
-      versesShared: Value<int>(s.versesShared + 1),
+      versesShared: Value<int>(s.versesShared + by),
       updatedAt: Value<DateTime>(DateTime.now()),
     ));
   }

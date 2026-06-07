@@ -38,7 +38,7 @@ class FavoritesScreen extends ConsumerWidget {
           }
           return ListView.separated(
             itemCount: items.length,
-            separatorBuilder: (_, __) => const Divider(height: 1),
+            separatorBuilder: (_, _) => const Divider(height: 1),
             itemBuilder: (BuildContext context, int i) {
               final FavoriteWithVerse item = items[i];
               return _FavoriteTile(item: item);

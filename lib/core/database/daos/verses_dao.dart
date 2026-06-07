@@ -165,6 +165,45 @@ class VersesDao extends DatabaseAccessor<AppDatabase> with _$VersesDaoMixin {
     return rows.map((r) => r.read<int>('verse_id')).toList();
   }
 
+  /// Carga múltiples versículos por id (batch, preservando el orden
+  /// de entrada). Versículos no encontrados se omiten.
+  Future<List<Verse>> versesByIds(List<int> ids) async {
+    if (ids.isEmpty) return <Verse>[];
+    final List<Verse> result = <Verse>[];
+    for (final int id in ids) {
+      final Verse? v = await byId(id);
+      if (v != null) result.add(v);
+    }
+    return result;
+  }
+
+  /// Devuelve el mapa de tags por versículo (batch) usando un solo
+  /// `customSelect` con `IN (...)`. Si [ids] está vacío, devuelve mapa
+  /// vacío.
+  Future<Map<int, List<String>>> tagsByVerseIds(List<int> ids) async {
+    final Map<int, List<String>> out = <int, List<String>>{};
+    if (ids.isEmpty) return out;
+    final vt = attachedDatabase.verseTags;
+    final String placeholders = List<String>.filled(ids.length, '?').join(',');
+    final rows = await customSelect(
+      'SELECT verse_id, tag FROM verse_tags '
+      'WHERE verse_id IN ($placeholders) '
+      'ORDER BY verse_id, tag',
+      variables: <Variable<Object>>[
+        for (final int id in ids) Variable<int>(id),
+      ],
+      readsFrom: <TableInfo<Table, dynamic>>{vt},
+    ).get();
+    for (final row in rows) {
+      final int? vid = row.readNullable<int>('verse_id');
+      final String? tag = row.readNullable<String>('tag');
+      if (vid != null && tag != null) {
+        out.putIfAbsent(vid, () => <String>[]).add(tag);
+      }
+    }
+    return out;
+  }
+
   String _escapeLike(String s) =>
       s.replaceAll(r'\', r'\\').replaceAll('%', r'\%').replaceAll('_', r'\_');
 }

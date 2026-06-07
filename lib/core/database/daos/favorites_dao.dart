@@ -59,6 +59,16 @@ class FavoritesDao extends DatabaseAccessor<AppDatabase>
     return row != null;
   }
 
+  /// Stream reactivo: ¿es favorito este versículo? Emite `true` o `false`
+  /// cada vez que cambia el estado del versículo en la tabla.
+  Stream<bool> isFavoriteStream(int verseId) {
+    return (select(favorites)
+          ..where(($FavoritesTable f) => f.verseId.equals(verseId))
+          ..limit(1))
+        .watchSingleOrNull()
+        .map((row) => row != null);
+  }
+
   /// Stream de favoritos con join a versículos. Ordenados por fecha desc.
   Stream<List<FavoriteWithVerse>> watchAllWithVerse() {
     final query = select(favorites).join(<Join<HasResultSet, dynamic>>[

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/constants/app_constants.dart';
 import 'core/di/providers.dart';
 import 'core/routing/app_router.dart';
+import 'features/settings/data/app_settings.dart';
 import 'shared/theme/app_theme.dart';
 
 class OracionApp extends ConsumerWidget {
@@ -13,15 +14,19 @@ class OracionApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final GoRouterConfig routerConfig = ref.watch(appRouterProvider);
+    final AsyncValue<AppSettings> settingsAsync =
+        ref.watch(appSettingsProvider);
+    final AppSettings settings = settingsAsync.valueOrNull ?? AppSettings.defaults;
 
     return MaterialApp.router(
       title: 'Oración',
       debugShowCheckedModeBanner: false,
 
-      // Tema
+      // Tema reactivo: cambia inmediatamente al editar
+      // Configuración -> Tema / Tamaño de letra.
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
-      themeMode: ThemeMode.system,
+      themeMode: settings.themeMode,
 
       // Router
       routerConfig: routerConfig.router,
@@ -36,11 +41,11 @@ class OracionApp extends ConsumerWidget {
         Locale(AppConstants.supportedLocaleCode),
       ],
 
-      // Builder envuelve en scroll behavior correcto
+      // Aplica el font_scale persistido en la DB a toda la UI.
       builder: (BuildContext context, Widget? child) {
         return MediaQuery(
           data: MediaQuery.of(context).copyWith(
-            textScaler: const TextScaler.linear(1.0),
+            textScaler: TextScaler.linear(settings.fontScale),
           ),
           child: child ?? const SizedBox.shrink(),
         );
