@@ -33,6 +33,13 @@ class ChatRepository {
   /// Procesa una consulta del usuario. Si [conversationId] es null,
   /// crea una conversación nueva. Devuelve la selección de versículos
   /// (puede ser vacía en casos extremos).
+  ///
+  /// Efectos colaterales:
+  ///  - Persiste el mensaje del usuario.
+  ///  - Persiste cada versículo seleccionado como mensaje `bible`.
+  ///  - Si el engine cayó en fallback, persiste un mensaje `system`
+  ///    que el `MessageBubble` muestra en cursiva centrada.
+  ///  - Toca la conversación y actualiza `usage_stats.searchesPerformed`.
   Future<ChatTurnResult> processUserMessage({
     required String userInput,
     int? conversationId,
@@ -63,9 +70,15 @@ class ChatRepository {
         verseId: v.id,
       );
     }
+
+    // 4. Mensaje de sistema si el engine cayó en fallback.
+    if (result.usedFallback) {
+      await _insertFallbackSystemMessage(convId, result);
+    }
+
     await conversationsDao.touch(convId);
 
-    // 4. Contadores (locales, no se envían a ningún servidor).
+    // 5. Contadores (locales, no se envían a ningún servidor).
     if (result.verses.isNotEmpty) {
       await usageStatsDao.incrementSearches(by: result.verses.length);
     }
@@ -78,6 +91,27 @@ class ChatRepository {
     return ChatTurnResult(
       conversationId: convId,
       result: result,
+    );
+  }
+
+  /// Inserta un mensaje de sistema que explica al usuario que la
+  /// selección vino de un fallback (no del lexicon). El texto
+  /// sigue el principio del proyecto: nunca generamos contenido
+  /// "nuestro" — sólo informamos del estado del motor.
+  Future<void> _insertFallbackSystemMessage(
+    int convId,
+    SelectionResult result,
+  ) async {
+    final String text = result.matchedTags.isEmpty
+        ? 'No reconocí esas palabras en tu intención. '
+            'Te muestro versículos al azar de la Biblia.'
+        : 'Ya mostramos antes todos los versículos sobre '
+            '${result.matchedTags.join(", ")} en esta conversación. '
+            'Te muestro versículos al azar de la Biblia.';
+    await messagesDao.insert(
+      conversationId: convId,
+      role: MessageRole.system,
+      content: text,
     );
   }
 

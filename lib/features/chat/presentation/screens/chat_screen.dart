@@ -14,10 +14,12 @@ import '../widgets/message_bubble.dart';
 
 /// Pantalla principal: chat con la Biblia.
 ///
-/// Sprint 3: integra el Bible Engine v1. El usuario escribe una
-/// intención en español; la app la traduce a tags, busca versículos
-/// candidatos, los diversifica con MMR y devuelve los 3 más
-/// relevantes (sin repetir los ya mostrados en esta conversación).
+/// Integra el Bible Engine: el usuario escribe una intención en
+/// español; la app la traduce a tags, busca versículos candidatos,
+/// los diversifica con MMR y devuelve los 3 más relevantes (sin
+/// repetir los ya mostrados en esta conversación). Cuando el
+/// lexicon no reconoce la intención, se inserta un mensaje de
+/// sistema explicando que la selección es aleatoria.
 class ChatScreen extends ConsumerStatefulWidget {
   const ChatScreen({super.key, this.conversationId});
 
@@ -233,7 +235,7 @@ class _EmptyState extends StatelessWidget {
                       Icon(Icons.bolt_outlined, color: cs.primary),
                       const SizedBox(width: 8),
                       const Text(
-                        'Bible Engine v1 activo',
+                        'Oración guiada por la Biblia',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],

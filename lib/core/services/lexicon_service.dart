@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import 'logger.dart';
@@ -55,6 +56,15 @@ class LexiconService {
   /// Reinicia la instancia (para tests).
   static void reset() {
     _instance = null;
+  }
+
+  /// Construye un LexiconService a partir de un mapa en memoria.
+  ///
+  /// Pensado para tests y para escenarios donde se necesita un
+  /// lexicon personalizado sin tocar el asset shipped.
+  @visibleForTesting
+  factory LexiconService.forTesting(Map<String, List<String>> synonyms) {
+    return LexiconService._(Map<String, List<String>>.from(synonyms));
   }
 
   /// Tokeniza la consulta y devuelve los tag IDs resultantes.
