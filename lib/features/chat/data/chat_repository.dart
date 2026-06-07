@@ -8,13 +8,16 @@ import '../../engine/services/verse_selector.dart';
 /// Repository que orquesta el flujo de chat:
 ///   - Crea o reutiliza una conversación.
 ///   - Persiste el mensaje del usuario.
-///   - Llama al selector de versículos.
+///   - Llama al selector de versículos (BM25 + embeddings).
 ///   - Persiste cada versículo como un mensaje "bible".
 ///   - Toca la conversación (actualiza `updatedAt`).
 ///   - Incrementa contadores de `usage_stats`.
 ///
-/// Es la única capa que la pantalla de chat debe conocer para
-/// enviar una consulta.
+/// Sprint 4 (reencuadre): ya NO hay mensaje de sistema de
+/// fallback aleatorio. Si el selector no encuentra versículos,
+/// devuelve los más relevantes del corpus (sin random). Si un
+/// meta-intent (saludo, gracias, amén) coincide, se sirven
+/// versículos curados directamente.
 class ChatRepository {
   ChatRepository({
     required this.conversationsDao,
@@ -31,21 +34,17 @@ class ChatRepository {
   final AppLogger logger;
 
   /// Procesa una consulta del usuario. Si [conversationId] es null,
-  /// crea una conversación nueva. Devuelve la selección de versículos
-  /// (puede ser vacía en casos extremos).
+  /// crea una conversación nueva.
   ///
   /// Efectos colaterales:
   ///  - Persiste el mensaje del usuario.
   ///  - Persiste cada versículo seleccionado como mensaje `bible`.
-  ///  - Si el engine cayó en fallback, persiste un mensaje `system`
-  ///    que el `MessageBubble` muestra en cursiva centrada.
   ///  - Toca la conversación y actualiza `usage_stats.searchesPerformed`.
   Future<ChatTurnResult> processUserMessage({
     required String userInput,
     int? conversationId,
   }) async {
-    final int convId = conversationId ?? await _createConversation();
-    await _ensureContext(convId);
+    final int convId = conversationId ?? await conversationsDao.create();
 
     // 1. Persistir el mensaje del usuario.
     await messagesDao.insert(
@@ -70,22 +69,16 @@ class ChatRepository {
         verseId: v.id,
       );
     }
-
-    // 4. Mensaje de sistema si el engine cayó en fallback.
-    if (result.usedFallback) {
-      await _insertFallbackSystemMessage(convId, result);
-    }
-
     await conversationsDao.touch(convId);
 
-    // 5. Contadores (locales, no se envían a ningún servidor).
+    // 4. Contadores (locales, no se envían a ningún servidor).
     if (result.verses.isNotEmpty) {
       await usageStatsDao.incrementSearches(by: result.verses.length);
     }
 
     logger.i(
-      'Chat turn procesado: conv=$convId userTags=${result.matchedTags} '
-      'verses=${result.verses.length} fallback=${result.usedFallback}',
+      'Chat turn procesado: conv=$convId terms=${result.matchedTerms} '
+      'verses=${result.verses.length} metaIntent=${result.usedMetaIntent}',
     );
 
     return ChatTurnResult(
@@ -94,43 +87,10 @@ class ChatRepository {
     );
   }
 
-  /// Inserta un mensaje de sistema que explica al usuario que la
-  /// selección vino de un fallback (no del lexicon). El texto
-  /// sigue el principio del proyecto: nunca generamos contenido
-  /// "nuestro" — sólo informamos del estado del motor.
-  Future<void> _insertFallbackSystemMessage(
-    int convId,
-    SelectionResult result,
-  ) async {
-    final String text = result.matchedTags.isEmpty
-        ? 'No reconocí esas palabras en tu intención. '
-            'Te muestro versículos al azar de la Biblia.'
-        : 'Ya mostramos antes todos los versículos sobre '
-            '${result.matchedTags.join(", ")} en esta conversación. '
-            'Te muestro versículos al azar de la Biblia.';
-    await messagesDao.insert(
-      conversationId: convId,
-      role: MessageRole.system,
-      content: text,
-    );
-  }
-
   /// Crea una nueva conversación (vacía). Útil para el botón
   /// "Nueva conversación" del chat.
   Future<int> createConversation({String? title}) {
     return conversationsDao.create(title: title);
-  }
-
-  Future<int> _createConversation() async {
-    return conversationsDao.create();
-  }
-
-  Future<void> _ensureContext(int convId) async {
-    // Asegura que existe fila en conversation_contexts para esta conv.
-    // (VerseSelector ya lo hace internamente, pero lo hacemos aquí
-    // para que cualquier estado sea consistente.)
-    // No necesitamos guardar el contexto; basta con que el selector
-    // lo gestione. Este método queda como hook futuro.
   }
 }
 

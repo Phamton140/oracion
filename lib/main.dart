@@ -22,10 +22,11 @@ Future<void> main() async {
   final ProviderContainer container = ProviderContainer();
 
   final logger = container.read(loggerProvider);
-  logger.i('Oración iniciando — Sprint 3');
+  logger.i('Oración iniciando — Sprint 4');
 
-  // Pre-cargar el corpus bíblico y el lexicon en background. La app
-  // muestra un splash hasta que termine.
+  // Pre-cargar el corpus bíblico, el índice semántico y los
+  // embeddings en background. La app muestra un splash hasta
+  // que termine.
   try {
     await container.read(assetLoaderProvider.future);
     logger.i('Corpus bíblico listo.');
@@ -33,10 +34,22 @@ Future<void> main() async {
     logger.e('Error cargando el corpus bíblico', e, st);
   }
   try {
-    await container.read(lexiconProvider.future);
-    logger.i('Lexicon listo.');
+    await container.read(semanticIndexProvider.future);
+    logger.i('Índice semántico listo.');
   } catch (e, st) {
-    logger.e('Error cargando el lexicon', e, st);
+    logger.e('Error cargando el índice semántico', e, st);
+  }
+  try {
+    await container.read(embeddingStoreProvider.future);
+    logger.i('Embeddings listos.');
+  } catch (e, st) {
+    logger.e('Error cargando los embeddings', e, st);
+  }
+  try {
+    await container.read(queryExpanderProvider.future);
+    logger.i('Query expander listo.');
+  } catch (e, st) {
+    logger.e('Error cargando el query expander', e, st);
   }
 
   runApp(

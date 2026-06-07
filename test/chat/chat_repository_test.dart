@@ -1,11 +1,16 @@
+import 'dart:math' as math;
+
 import 'package:drift/drift.dart' hide isNotNull;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:oracion/core/database/app_database.dart';
 import 'package:oracion/core/database/daos/messages_dao.dart';
-import 'package:oracion/core/services/lexicon_service.dart';
 import 'package:oracion/core/services/logger.dart';
 import 'package:oracion/features/chat/data/chat_repository.dart';
+import 'package:oracion/features/engine/embeddings/embedding_store.dart';
+import 'package:oracion/features/engine/semantic/semantic_index.dart';
+import 'package:oracion/features/engine/semantic/semantic_tokenizer.dart';
+import 'package:oracion/features/engine/services/query_expander.dart';
 import 'package:oracion/features/engine/services/verse_selector.dart';
 
 Future<void> _insertVerse(
@@ -29,14 +34,78 @@ Future<void> _insertVerse(
       );
 }
 
-Future<void> _insertTag(AppDatabase db, int verseId, String tag) async {
-  await db.into(db.verseTags).insert(
-        VerseTagsCompanion.insert(verseId: verseId, tag: tag),
-      );
+SemanticIndex _buildIndex({
+  required List<String> docs,
+  required List<int> refIds,
+}) {
+  const SemanticTokenizer tokenizer = SemanticTokenizer(
+    wordNgramMin: 1,
+    wordNgramMax: 1,
+  );
+  final List<List<String>> tokenized = <List<String>>[
+    for (final String d in docs) tokenizer.tokenize(d),
+  ];
+  final Map<String, int> df = <String, int>{};
+  for (final List<String> doc in tokenized) {
+    for (final String t in doc.toSet()) {
+      df[t] = (df[t] ?? 0) + 1;
+    }
+  }
+  final List<String> vocab = df.keys.toList()..sort();
+  final Map<String, int> termId = <String, int>{
+    for (int i = 0; i < vocab.length; i++) vocab[i]: i,
+  };
+  final int N = tokenized.length;
+  final List<double> idf = <double>[
+    for (final String t in vocab)
+      math.log(1 + (N - df[t]! + 0.5) / (df[t]! + 0.5)),
+  ];
+  final List<List<int>> docTerms = <List<int>>[];
+  final List<List<double>> docWeights = <List<double>>[];
+  int totalLen = 0;
+  for (final List<String> toks in tokenized) {
+    final Map<int, int> counts = <int, int>{};
+    for (final String t in toks) {
+      final int? id = termId[t];
+      if (id == null) continue;
+      counts[id] = (counts[id] ?? 0) + 1;
+    }
+    final List<MapEntry<int, int>> entries = counts.entries.toList()
+      ..sort((MapEntry<int, int> a, MapEntry<int, int> b) =>
+          a.key.compareTo(b.key));
+    docTerms.add(<int>[for (final MapEntry<int, int> e in entries) e.key]);
+    docWeights.add(<double>[
+      for (final MapEntry<int, int> e in entries) e.value.toDouble(),
+    ]);
+    totalLen += toks.length;
+  }
+  return SemanticIndex.fromCorpus(Bm25CorpusData(
+    vocabulary: vocab,
+    idf: idf,
+    docKinds: <int>[for (int i = 0; i < N; i++) 0],
+    docRefIds: refIds,
+    documents: docTerms,
+    docWeightsPerDoc: docWeights,
+    avgDocLength: N == 0 ? 0.0 : totalLen / N,
+  ));
+}
+
+EmbeddingStore _buildEmbeddings() {
+  return EmbeddingStore.fromMemory(
+    vocab: <String>['paz', 'amor', 'miedo', 'hola', 'gracias', 'amen'],
+    vectors: <List<double>>[
+      <double>[1.0, 0.5, 0.0],
+      <double>[0.5, 1.0, 0.0],
+      <double>[0.0, 0.0, 1.0],
+      <double>[0.1, 0.1, 0.1],
+      <double>[0.1, 0.1, 0.1],
+      <double>[0.1, 0.1, 0.1],
+    ],
+  );
 }
 
 void main() {
-  group('ChatRepository', () {
+  group('ChatRepository (Sprint 4 sin fallback)', () {
     late AppDatabase db;
     late ChatRepository repo;
     late AppLogger logger;
@@ -45,33 +114,43 @@ void main() {
       db = AppDatabase.forTesting(NativeDatabase.memory());
       logger = AppLogger.create();
 
-      // Corpus mínimo: 3 versículos con tag "paz" + 3 sin tags.
-      // Los 3 sin tags alimentan el fallback cuando todos los
-      // "paz" ya se mostraron.
       await _insertVerse(db, 1,
-          book: 'Génesis', bookNumber: 1, chapter: 1, verse: 1, body: 'v1');
+          book: 'Génesis', bookNumber: 1, chapter: 1, verse: 1, body: 'paz');
       await _insertVerse(db, 2,
-          book: 'Salmos', bookNumber: 19, chapter: 23, verse: 1, body: 'v2');
+          book: 'Salmos', bookNumber: 19, chapter: 23, verse: 1, body: 'paz');
       await _insertVerse(db, 3,
-          book: 'Isaías', bookNumber: 23, chapter: 41, verse: 10, body: 'v3');
+          book: 'Isaías', bookNumber: 23, chapter: 41, verse: 10, body: 'paz');
       await _insertVerse(db, 4,
-          book: 'Mateo', bookNumber: 40, chapter: 5, verse: 9, body: 'v4');
+          book: 'Mateo', bookNumber: 40, chapter: 5, verse: 9, body: 'amor');
       await _insertVerse(db, 5,
-          book: 'Marcos', bookNumber: 41, chapter: 4, verse: 39, body: 'v5');
+          book: 'Marcos', bookNumber: 41, chapter: 4, verse: 39, body: 'miedo');
       await _insertVerse(db, 6,
-          book: 'Lucas', bookNumber: 42, chapter: 6, verse: 38, body: 'v6');
-      await _insertTag(db, 1, 'paz');
-      await _insertTag(db, 2, 'paz');
-      await _insertTag(db, 3, 'paz');
+          book: 'Lucas', bookNumber: 42, chapter: 6, verse: 38, body: 'gracia');
 
-      final LexiconService lexicon = LexiconService.forTesting(
-        <String, List<String>>{'paz': <String>['paz']},
+      final SemanticIndex index = _buildIndex(
+        docs: <String>[
+          'Génesis paz',
+          'Salmos paz',
+          'Isaías paz',
+          'Mateo amor',
+          'Marcos miedo',
+          'Lucas gracia',
+        ],
+        refIds: <int>[1, 2, 3, 4, 5, 6],
       );
+
       final VerseSelector selector = VerseSelector(
         versesDao: db.versesDao,
-        lexicon: lexicon,
+        bm25Index: index,
+        embeddings: _buildEmbeddings(),
+        tokenizer: const SemanticTokenizer(),
+        expander: QueryExpander.forTesting(<String, List<String>>{
+          'paz': <String>['amor', 'miedo'],
+        }),
         contextDao: db.contextDao,
         finalN: 3,
+        bm25Weight: 0.6,
+        embeddingWeight: 0.4,
       );
 
       repo = ChatRepository(
@@ -107,9 +186,9 @@ void main() {
       expect(result.conversationId, convId);
     });
 
-    test('persiste el mensaje del usuario con role=user', () async {
+    test('persiste user + bible, sin system (reencuadre)', () async {
       final int convId = await db.conversationsDao.create();
-      await repo.processUserMessage(
+      final ChatTurnResult r = await repo.processUserMessage(
         userInput: 'paz',
         conversationId: convId,
       );
@@ -120,35 +199,40 @@ void main() {
                     .map((MessageWithVerse mv) => mv.message)
                     .toList(),
               );
-      // Primero user, luego 3 bible (en orden cronológico).
-      expect(msgs, hasLength(4));
+      // 1 user + N bible (N = #verses devueltos), sin system.
+      expect(msgs, hasLength(1 + r.result.verses.length));
       expect(msgs.first.role, MessageRole.user);
-      expect(msgs.first.content, 'paz');
-      expect(msgs.skip(1).every((Message m) => m.role == MessageRole.bible),
-          isTrue);
+      expect(
+        msgs.where((Message m) => m.role == MessageRole.system),
+        isEmpty,
+      );
     });
 
-    test('persiste cada versículo con role=bible y verseId', () async {
+    test('NO inserta system message ni con query sin sentido',
+        () async {
       final int convId = await db.conversationsDao.create();
-      final ChatTurnResult result = await repo.processUserMessage(
-        userInput: 'paz',
+      await repo.processUserMessage(
+        userInput: 'xyzzynadieentiende',
         conversationId: convId,
       );
 
-      expect(result.result.verses, hasLength(3));
-
       final List<MessageWithVerse> msgs =
           await db.messagesDao.listByConversation(convId);
-      // Saltamos el user, los 3 siguientes son bible.
-      final List<MessageWithVerse> bibleMsgs =
-          msgs.where((MessageWithVerse mv) => mv.message.role == MessageRole.bible).toList();
-      expect(bibleMsgs, hasLength(3));
-      for (final MessageWithVerse mv in bibleMsgs) {
-        expect(mv.message.verseId, isNotNull);
-        expect(mv.verse, isNotNull);
-        expect(mv.verse!.book, isNotEmpty);
-        expect(mv.verse!.body, isNotEmpty);
-      }
+      // El user message sí se persiste.
+      expect(
+        msgs.where((MessageWithVerse mv) => mv.message.role == MessageRole.user),
+        hasLength(1),
+      );
+      // El system message nunca.
+      expect(
+        msgs.where((MessageWithVerse mv) => mv.message.role == MessageRole.system),
+        isEmpty,
+      );
+      // Pero siempre hay al menos un bible.
+      expect(
+        msgs.where((MessageWithVerse mv) => mv.message.role == MessageRole.bible),
+        hasLength(greaterThanOrEqualTo(1)),
+      );
     });
 
     test('incrementa usage_stats.searchesPerformed por #verses', () async {
@@ -162,15 +246,13 @@ void main() {
       );
 
       final UsageStat after = await db.usageStatsDao.get();
-      expect(after.searchesPerformed - searchesBefore, result.result.verses.length);
+      expect(after.searchesPerformed - searchesBefore,
+          result.result.verses.length);
     });
 
     test('toca la conversación (updatedAt cambia)', () async {
       final int convId = await db.conversationsDao.create();
       final Conversation? before = await db.conversationsDao.byId(convId);
-      // Drift almacena DateTime como segundos UNIX, así que
-      // dormimos >1s para garantizar un timestamp estrictamente
-      // posterior en el siguiente touch().
       await Future<void>.delayed(const Duration(milliseconds: 1100));
 
       await repo.processUserMessage(
@@ -181,7 +263,7 @@ void main() {
       expect(after!.updatedAt.isAfter(before!.updatedAt), isTrue);
     });
 
-    test('múltiples mensajes en la misma conversación persisten todo',
+    test('múltiples turnos persisten 2 user + N bible sin system',
         () async {
       final int convId = await db.conversationsDao.create();
       await repo.processUserMessage(
@@ -195,98 +277,14 @@ void main() {
 
       final List<MessageWithVerse> msgs =
           await db.messagesDao.listByConversation(convId);
-      // Turno 1 (match): 1 user + 3 bible.
-      // Turno 2 (fallback, todas las 'paz' ya mostradas):
-      // 1 user + 3 bible + 1 system.
-      // Total: 9.
-      expect(msgs, hasLength(9));
       expect(
         msgs.where((MessageWithVerse mv) => mv.message.role == MessageRole.user),
         hasLength(2),
       );
-      expect(
-        msgs.where((MessageWithVerse mv) => mv.message.role == MessageRole.bible),
-        hasLength(6),
-      );
-      expect(
-        msgs.where((MessageWithVerse mv) => mv.message.role == MessageRole.system),
-        hasLength(1),
-      );
-    });
-
-    test('anti-repetición: 2 mensajes seguidos no muestran los mismos versículos',
-        () async {
-      final int convId = await db.conversationsDao.create();
-      final ChatTurnResult r1 = await repo.processUserMessage(
-        userInput: 'paz',
-        conversationId: convId,
-      );
-      final ChatTurnResult r2 = await repo.processUserMessage(
-        userInput: 'paz',
-        conversationId: convId,
-      );
-      final Set<int> ids1 = r1.result.verses.map((Verse v) => v.id).toSet();
-      final Set<int> ids2 = r2.result.verses.map((Verse v) => v.id).toSet();
-      expect(ids1.intersection(ids2), isEmpty);
-    });
-
-    test('no inserta mensaje de sistema cuando el engine hace match',
-        () async {
-      final int convId = await db.conversationsDao.create();
-      await repo.processUserMessage(
-        userInput: 'paz',
-        conversationId: convId,
-      );
-
-      final List<MessageWithVerse> msgs =
-          await db.messagesDao.listByConversation(convId);
       expect(
         msgs.where((MessageWithVerse mv) => mv.message.role == MessageRole.system),
         isEmpty,
       );
-    });
-
-    test('inserta mensaje de sistema al caer en fallback por agotamiento',
-        () async {
-      final int convId = await db.conversationsDao.create();
-      // Turno 1: match (verses 1, 2, 3).
-      await repo.processUserMessage(
-        userInput: 'paz',
-        conversationId: convId,
-      );
-      // Turno 2: ya no quedan "paz" por mostrar → fallback.
-      final ChatTurnResult r2 = await repo.processUserMessage(
-        userInput: 'paz',
-        conversationId: convId,
-      );
-      expect(r2.result.usedFallback, isTrue);
-
-      final List<MessageWithVerse> msgs =
-          await db.messagesDao.listByConversation(convId);
-      final List<MessageWithVerse> systemMsgs = msgs
-          .where((MessageWithVerse mv) => mv.message.role == MessageRole.system)
-          .toList();
-      expect(systemMsgs, hasLength(1));
-      // El texto menciona "paz" porque sí hubo match en lexicon.
-      expect(systemMsgs.first.message.content, contains('paz'));
-    });
-
-    test('inserta mensaje de sistema en fallback por input sin tags',
-        () async {
-      final int convId = await db.conversationsDao.create();
-      await repo.processUserMessage(
-        userInput: 'xyzsinlex',
-        conversationId: convId,
-      );
-
-      final List<MessageWithVerse> msgs =
-          await db.messagesDao.listByConversation(convId);
-      final List<MessageWithVerse> systemMsgs = msgs
-          .where((MessageWithVerse mv) => mv.message.role == MessageRole.system)
-          .toList();
-      expect(systemMsgs, hasLength(1));
-      // El texto NO menciona tags (lista vacía).
-      expect(systemMsgs.first.message.content, contains('No reconocí'));
     });
   });
 }

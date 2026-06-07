@@ -10,10 +10,6 @@ class BibleConstants {
   /// en layouts y benchmarks sin necesidad de consultar la DB.)
   static const int approximateVerseCount = 31102;
 
-  /// Dimensión de los embeddings semánticos.
-  /// Coincide con paraphrase-multilingual-MiniLM-L12-v2.
-  static const int embeddingDimension = 384;
-
   /// Tamaño del Top-K inicial en el Bible Engine.
   /// Se recuperan K candidatos antes del re-ranking final.
   static const int topKCandidates = 50;
@@ -22,20 +18,44 @@ class BibleConstants {
   /// Limita la longitud de `ConversationContext.shownVerseIdsJson`.
   static const int conversationShownVerseLimit = 20;
 
-  /// Magic header del archivo `embeddings.bin`.
-  /// 4 bytes: 'O','R','E','M'.
-  static const int embeddingsMagic = 0x4D45524F;
+  // ---------------------------------------------------------------------------
+  // Sprint 4: índice BM25 + embeddings subword (no TF-IDF, no dense NN)
+  // ---------------------------------------------------------------------------
 
-  /// Versión del formato del archivo `embeddings.bin`.
-  static const int embeddingsFormatVersion = 1;
+  /// Asset path del índice semántico binario.
+  static const String semanticIndexAssetPath =
+      'assets/data/semantic_index.bin';
 
-  /// Decisión arquitectónica: en Sprint 4 los embeddings se cargarán
-  /// vía `mmap` o una estrategia equivalente para facilitar
-  /// escalabilidad futura. En Sprint 1 esta es solo documentación;
-  /// la implementación concreta llegará cuando se construya el
-  /// `SemanticSearchService`.
-  static const String embeddingsLoadingStrategy =
-      'mmap o equivalente (decidido para Sprint 4)';
+  /// Magic header del archivo `semantic_index.bin` (4 bytes ASCII).
+  /// "O" "R" "S" "I" = ORación Semantic Index.
+  static const int semanticIndexMagic = 0x4953524F;
+
+  /// Versión del formato binario del índice semántico.
+  static const int semanticIndexFormatVersion = 1;
+
+  /// Tamaño fijo del header del índice semántico en bytes.
+  /// 4 (magic) + 4 (version) + 5*4 (uint32) + 6*8 (uint64) = 72.
+  static const int semanticIndexHeaderSize = 72;
+
+  /// Constante `kind` de un documento del índice: versículo.
+  static const int docKindVerse = 0;
+
+  /// Constante `kind` de un documento del índice: libro.
+  static const int docKindBook = 1;
+
+  /// Tamaño de un `MetaEntry` del índice semántico en bytes.
+  /// uint8 kind + uint32 refId = 5 bytes.
+  static const int docMetaEntrySize = 5;
+
+  /// Frecuencia mínima de documento para que un término entre al
+  /// vocabulario. Términos que aparecen en menos de N documentos
+  /// son descartados (ruido tipográfico y hapax).
+  static const int minDocumentFrequency = 2;
+
+  /// Frecuencia máxima de documento (relativa al corpus) para que
+  /// un término no se considere stopword. Si un término aparece en
+  /// más del N% de los documentos, se descarta.
+  static const double maxDocumentFrequencyRatio = 0.5;
 
   /// Etiquetas semánticas curadas (subset MVP).
   /// Lista cerrada; el lexicon de sinónimos mapea palabras del

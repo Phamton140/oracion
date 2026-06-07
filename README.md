@@ -166,23 +166,49 @@ flutter build apk --release
 | 0 | Decisiones técnicas (cerrado) |
 | 1 | Cimientos, navegación, DB vacía, tema (cerrado) |
 | 2 | Corpus bíblico completo, Lector, Favoritos, Historial, Configuración, export/import (cerrado) |
-| **3** | **Bible Engine v1 (lexicon + tags + Top-K + MMR + feedback)** ← aquí |
-| 4 | Búsqueda semántica con embeddings (mmap) |
+| 3 | Bible Engine v1 (lexicon + tags + Top-K + MMR + feedback) (cerrado) |
+| **4** | **Bible Engine v2 (BM25 + embeddings subword + MMR, sin fallback aleatorio)** ← aquí |
 | 5 | Contexto conversacional (centroid, anti-repetición robusto) |
 | 6 | Optimización y pulido Android |
 | 7 | Publicación en Google Play |
 
 ## Estado del Proyecto
 
-**Sprint 3 de 7** — En construcción.
+**Sprint 4 de 7** — En construcción.
 
-Bible Engine v1: el usuario escribe una intención en español, la app
-la traduce a tags del lexicon, puntúa versículos, los diversifica con
-MMR y devuelve 3 sin repetir los ya mostrados en la conversación.
-Cuando el lexicon no reconoce la intención, se inserta un mensaje
-de sistema explicando que la selección es aleatoria.
+Bible Engine v2: el usuario escribe una intención en español; la app
+la expande con sinónimos curados, recupera candidatos con BM25, los
+rerankea con embeddings subword (estilo fastText, OOV via subword
+averaging), los diversifica con MMR y devuelve los 3 más relevantes
+sin repetir los ya mostrados en la conversación. No hay fallback
+aleatorio: si BM25 no encuentra coincidencias, la app lo dice
+abiertamente al usuario.
 
-Corpus bíblico cargado: **31,102 versículos**, **46 tags**, **74.7% cobertura**.
+Pipeline (Sprint 4, reencuadre):
+
+```
+  userInput
+     │
+     ▼
+  tokenizer  ──►  meta_intent?  ──►  override curado
+     │
+     ▼
+  query_expander (sinónimos curados ~60)
+     │
+     ▼
+  BM25 top-K (k=100, k1=1.5, b=0.75)
+     │
+     ▼
+  embedding rerank (subword average + cosine)
+     │
+     ▼
+  score = 0.55·bm25 + 0.45·emb
+     │
+     ▼
+  filter shown  ──►  MMR (diversifica por libro)  ──►  top-N
+```
+
+Corpus bíblico cargado: **31,102 versículos**.
 
 ## Licencia
 

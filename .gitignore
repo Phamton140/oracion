@@ -64,3 +64,11 @@ assets/bible/verse_tags_auto.csv
 assets/bible/verse_tags_final.csv
 # rv1909.json es intermedio pero útil para inspección local; descomentar para ignorar:
 # assets/bible/rv1909.json
+
+# SQLite WAL files (regenerables al abrir la DB)
+assets/bible/bible_assets.db-shm
+assets/bible/bible_assets.db-wal
+
+# Sprint 4: índices binarios precomputados (regenerables con tool/build_semantic_index.dart)
+assets/data/semantic_index.bin
+assets/data/verse_embeddings.bin

@@ -14,12 +14,13 @@ import '../widgets/message_bubble.dart';
 
 /// Pantalla principal: chat con la Biblia.
 ///
-/// Integra el Bible Engine: el usuario escribe una intención en
-/// español; la app la traduce a tags, busca versículos candidatos,
-/// los diversifica con MMR y devuelve los 3 más relevantes (sin
-/// repetir los ya mostrados en esta conversación). Cuando el
-/// lexicon no reconoce la intención, se inserta un mensaje de
-/// sistema explicando que la selección es aleatoria.
+/// Integra el Bible Engine (Sprint 4): el usuario escribe una
+/// intención en español; la app la expande con sinónimos curados,
+/// recupera candidatos con BM25, los rerankea con embeddings
+/// subword, los diversifica con MMR y devuelve los 3 más
+/// relevantes (sin repetir los ya mostrados en esta conversación).
+/// No hay fallback aleatorio: si BM25 no encuentra coincidencias,
+/// la app lo dice abiertamente al usuario.
 class ChatScreen extends ConsumerStatefulWidget {
   const ChatScreen({super.key, this.conversationId});
 
